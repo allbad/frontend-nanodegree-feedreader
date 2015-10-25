@@ -51,7 +51,7 @@ $(function() {
 
         /* Test that ensures the menu element is hidden by default.
          */
-        it('should be hidden by default', function() {
+        it('is hidden by default', function() {
             expect(body.hasClass('menu-hidden')).toBe(true);
         });
 
@@ -59,7 +59,7 @@ $(function() {
          * is clicked. This test has two expectations: does the menu display
          * when clicked and does it hide when clicked again.
          */
-        it('should toggle visibility when the menu icon is clicked', function() {
+        it('toggles visibility when the menu icon is clicked', function() {
             expect(body.hasClass('menu-hidden')).toBe(true);
 
             menuIconLink.click();
@@ -85,7 +85,7 @@ $(function() {
             });
         });
 
-        it('should load at least one .entry element', function() {
+        it('load at least one .entry element', function() {
             var entry = $('.entry');
             expect(entry.length).toBeGreaterThan(0);
         });
@@ -94,12 +94,24 @@ $(function() {
     /* Test suite named "New Feed Selection" */
     describe('New Feed Selection', function() {
 
-
-
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
+        /* Test that ensures when a new feed is loaded by the loadFeed function
+         * that the content actually changes.
          */
+
+        var currentFeed;
+
+        beforeEach(function(done) {
+            currentFeed = $('.feed').html();
+            loadFeed(1, function() {
+                done();
+            });
+        });
+
+        it('checks content changes when new feed is loaded', function(done) {
+            var newFeed = $('.feed').html();
+            expect(currentFeed).not.toBe(newFeed);
+            done();
+        });
 
     });
 }());
